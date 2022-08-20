@@ -1,0 +1,37 @@
+$font-xs: 0.75rem /* 12px */;
+$font-xs-lineheight: 1rem /* 16px */;
+$font-sm: 0.85rem /* 14px */;
+$font-sm-lineheight: 1.25rem; /* 20px */
+$font-base: 1rem; /* 16px */
+$font-base-lineheight: 1.5rem; /* 24px */
+$font-lg: 1.125rem; /* 18px */
+$font-lg-lineheight: 1.75rem; /* 28px */
+$font-xl: 1.25rem; /* 20px */
+$font-xl-lineheight: 1.75rem; /* 28px */
+$font-2xl: 1.5rem /* 24px */;
+$font-2xl-lineheight: 2rem /* 32px */;
+$font-3xl: 1.875rem; /* 30px */
+$font-3xl-lineheight: 2.25rem; /* 36px */
+$font-4xl: 2.25rem; /* 36px */
+$font-4xl-lineheight: 2.5rem; /* 40px */
+$font-5xl: 3rem; /* 48px */
+$font-5xl-lineheight: 1;
+
+$gray-300: rgb(209 213 219);
+$gray-400: rgb(156 163 175);
+$gray-500: rgb(107 114 128);
+$gray-800: rgb(31 41 55);
+$gray-900: rgb(17 24 39);
+
+$blue: rgb(110, 170, 248);
+$sidebar-width: 15rem;
+
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+$shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+$px375: 23.438rem; // iPhone 13 Mini
+$px428: 26.75rem; // iPhone 13 Pro Max
+$px500: 31.25rem; // browser min
+// iMac 27 2545px
