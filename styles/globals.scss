@@ -17,6 +17,10 @@ a {
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  display: none !important;
+}
+
 button {
   padding: 0;
   border: none;

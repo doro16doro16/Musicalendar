@@ -121,23 +121,20 @@
 
 // 기록창
 .diary {
-  // display: grid;
-  // grid-template-rows: repeat(3, minmax(0, 1fr));
-  // grid-template-rows: 3.5fr, 1fr, 3.5fr;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  // position: fixed;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  padding: 3rem;
-  width: $px500;
-  background-color: orange; // 임시
+  padding: 2.5rem;
+  width: $px428;
+  background-color: black;
   textarea {
     color: $gray-300;
+    margin-top: 5rem;
     background-color: transparent;
     padding: 1.25em;
     border-radius: 0.625rem; /* 10px */
@@ -145,8 +142,9 @@
     outline: none;
     font-size: 1rem;
     line-height: $font-lg-lineheight;
+    text-align: center;
     width: 100%;
-    height: 100%;
+    height: 14rem;
     // height: 100px;
     // width: 100px;
     transition: all 0.2s;
@@ -163,20 +161,33 @@
   }
 }
 .diary__img {
-  max-width: 20rem;
-
+  width: 90%;
   img {
     width: 100%;
     height: 100%;
   }
 }
-.diary__txt {
+
+.diary__txt,
+.diary__txt2 {
+  display: flex;
+  overflow-x: scroll;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  width: 20.75rem; /* 332px 이미지 크기 */
+  scrollbar-width: none;
+  // justify-content: center;
   h4 {
-    font-size: $font-xl;
-    margin: 1.5rem auto 1rem;
+    font-size: $font-3xl;
+    font-weight: bold;
+    margin: 1rem 0 0.5rem;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
   }
   span {
     font-size: $font-lg;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
   }
 }
 
@@ -525,66 +536,33 @@
     display: none;
   }
   .diary {
-    // display: grid;
-    // grid-template-rows: repeat(3, minmax(0, 1fr));
-    // grid-template-rows: 3.5fr, 1fr, 3.5fr;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    // position: fixed;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding: 4rem;
-    max-width: $px500;
-    background-color: orange; // 임시
-    textarea {
-      color: $gray-500;
-      background-color: transparent;
-      padding: 1rem;
-      border-radius: 0.625rem; /* 10px */
-      border: 2px solid transparent;
-      outline: none;
-      font-size: 1.25rem;
-      line-height: 2rem;
-      text-align: center;
-      margin-top: 4rem;
-      width: 80%;
-      height: 100%;
-      // height: 100px;
-      // width: 100px;
-      transition: all 0.2s;
-      &:hover {
-        cursor: pointer;
-        background-color: #fff;
-      }
-      &:focus {
-        cursor: text;
-        color: #333;
-        background-color: #fff;
-        border-color: $blue;
-      }
-    }
+    position: relative;
+    width: 100vw;
+    height: 100vh;
   }
-  .diary__img {
-    max-width: 20rem;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .diary__txt {
-    h4 {
-      font-size: $font-4xl;
-      margin: 1.75rem auto 0.5rem;
-    }
-    span {
-      font-size: $font-lg;
-      color: $gray-300;
-    }
-  }
+
+  // .diary__txt2 {
+  //   transition: 0.3s;
+  //   animation: textLoop 20s linear infinite;
+  //   &:hover {
+  //     animation-play-state: paused;
+  //     cursor: pointer;
+  //   }
+  //   @keyframes textLoop {
+  //     0% {
+  //       transform: translateX(0);
+  //     }
+  //     100% {
+  //       transform: translateX(-100%);
+  //     }
+  //   }
+  //   h4 {
+  //     overflow: auto;
+  //   }
+  //   span {
+  //     overflow: auto;
+  //   }
+  // }
   .sidebar {
     position: fixed;
     display: flex;
@@ -635,53 +613,6 @@
     }
   }
 }
-// 모바일
-// @media screen and (max-width: 640px) {
-//   .sidebar {
-//     position: sticky;
-//     display: flex;
-
-//     // bottom: 0;
-//     width: 100%;
-//     hr {
-//       display: none;
-//     }
-//     button {
-//       flex-direction: column;
-//       flex-grow: 1;
-//       flex-basis: 0;
-//       p {
-//         margin: 0.5rem auto;
-//       }
-//     }
-//   }
-
-//   .icon {
-//     width: 2.25rem;
-//     height: 2.25rem;
-//   }
-//   .sidebar__playlist {
-//     display: none;
-//   }
-
-//   .home__text {
-//     padding-right: 8px;
-//   }
-
-//   .userInfo {
-//     > div {
-//       > * {
-//         margin-right: 0;
-//       }
-//     }
-//     p {
-//       display: none;
-//     }
-//     .icon {
-//       display: none;
-//     }
-//   }
-// }
 
 // 로그인
 .login {
