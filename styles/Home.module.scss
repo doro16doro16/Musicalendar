@@ -9,7 +9,6 @@
 .flex {
   display: flex;
 }
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -129,65 +128,64 @@
   top: 0;
   right: 0;
   bottom: 0;
-  padding: 2.5rem;
+  padding: 3.5rem;
   width: $px428;
+  min-height: 63rem; /*임시*/
   background-color: black;
-  textarea {
-    color: $gray-300;
-    margin-top: 5rem;
-    background-color: transparent;
-    padding: 1.25em;
-    border-radius: 0.625rem; /* 10px */
-    border: 2px solid transparent;
-    outline: none;
-    font-size: 1rem;
-    line-height: $font-lg-lineheight;
-    text-align: center;
+  > div {
     width: 100%;
-    height: 14rem;
-    // height: 100px;
-    // width: 100px;
-    transition: all 0.2s;
-    &:hover {
-      cursor: pointer;
-      background-color: #fff;
-    }
-    &:focus {
-      cursor: text;
-      color: #333;
-      background-color: #fff;
-      border-color: $blue;
+    textarea {
+      color: $gray-500;
+      position: absolute;
+      left: 3.5rem; /* diary padding */
+      top: 51%;
+      background-color: transparent;
+      padding: 0.75rem;
+      border-radius: 0.625rem; /* 10px */
+      border: 2px solid transparent;
+      outline: none;
+      font-size: 1rem;
+      line-height: $font-lg-lineheight;
+      text-align: center;
+      width: calc(100% - 7rem);
+      height: 26%;
+      transition: all 0.2s;
+      &:hover {
+        cursor: pointer;
+        background-color: #fff;
+      }
+      &:focus {
+        cursor: text;
+        color: #333;
+        background-color: #fff;
+        border-color: $blue;
+      }
     }
   }
 }
 .diary__img {
-  width: 90%;
   img {
     width: 100%;
     height: 100%;
   }
 }
 
-.diary__txt,
-.diary__txt2 {
+.diary__txt {
   display: flex;
   overflow-x: scroll;
   flex: 0 0 auto;
   white-space: nowrap;
-  width: 20.75rem; /* 332px 이미지 크기 */
-  scrollbar-width: none;
+  // width: 20.75rem; /* 332px 이미지 크기 */
+  // scrollbar-width: none;
   // justify-content: center;
   h4 {
     font-size: $font-3xl;
     font-weight: bold;
-    margin: 1rem 0 0.5rem;
-    // text-overflow: ellipsis;
-    // overflow: hidden;
+    margin: 7% auto 0.5rem;
   }
   span {
     font-size: $font-lg;
-    // text-overflow: ellipsis;
-    // overflow: hidden;
+    margin: 0 auto;
   }
 }
 
@@ -541,28 +539,6 @@
     height: 100vh;
   }
 
-  // .diary__txt2 {
-  //   transition: 0.3s;
-  //   animation: textLoop 20s linear infinite;
-  //   &:hover {
-  //     animation-play-state: paused;
-  //     cursor: pointer;
-  //   }
-  //   @keyframes textLoop {
-  //     0% {
-  //       transform: translateX(0);
-  //     }
-  //     100% {
-  //       transform: translateX(-100%);
-  //     }
-  //   }
-  //   h4 {
-  //     overflow: auto;
-  //   }
-  //   span {
-  //     overflow: auto;
-  //   }
-  // }
   .sidebar {
     position: fixed;
     display: flex;
