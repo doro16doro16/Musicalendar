@@ -1,151 +1,41 @@
 import React, { useEffect, useState } from "react";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
+import Month from "./Month";
 import styles from "../styles/Home.module.scss";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import CalendarHeader from "./CalendarHeader";
 
 function Calendar() {
-  const typeMap = [
-    "fire",
-    "water",
-    "grass",
-    "fighting",
-    "flying",
-    "fairy",
-    "poison",
-    "dragon",
-    "steel",
-    "electric",
-    "ground",
-    "rock",
-  ];
-  const [date, setDate] = useState(dayjs());
-  const [daysArr, setDaysArr] = useState([]);
-  const [pokemonArr, setPokemonArr] = useState([]);
-  const [typeArr, setTypeArr] = useState([]);
-  const [currentType, setCurrentType] = useState(null);
-
-  useEffect(() => {
-    // 893 pokemon
-    async function sendRequest() {
-      const promises = new Array(750)
-        .fill()
-        .map(
-          async (v, i) =>
-            await fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}`)
-        );
-      var resolved = await Promise.all(promises);
-      var data = await Promise.all(resolved.map((res) => res.json()));
-      setPokemonArr(data);
-    }
-    sendRequest();
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    createCalendar(date);
-  }, [date]);
-
-  const appendPokemon = (daysArr) => {
-    if (!daysArr) return;
-    const filteredState = filterArr(typeMap[date.month()]);
-    setTypeArr(filteredState);
-    let newDays = daysArr.map((day, i) => {
-      if (day) {
-        return { day: day.date(), ...filteredState[i] };
-      }
-      return day;
-    });
-    return newDays;
-  };
-
-  const createCalendar = (month) => {
-    let firstDay = dayjs(month).startOf("M");
-    setCurrentType(typeMap[date.month()]);
-
-    let days = Array.apply(null, { length: month.daysInMonth() }) // 이번 달의 일 수 가져오기
-      .map(Number.call, Number)
-      .map((n) => {
-        return dayjs(firstDay).add(n, "d");
+  const getMatrix = (month = dayjs().month()) => {
+    month = Math.floor(month);
+    const year = dayjs().year();
+    // const firstDay = dayjs(dayjs()).startOf("M");
+    // let currentMonthCount = 0 - firstDay.day();
+    const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
+    let currentMonthCount = 0 - firstDayOfTheMonth;
+    const daysMatrix = new Array(5).fill([]).map(() => {
+      return new Array(7).fill(null).map(() => {
+        currentMonthCount++;
+        // return dayjs(firstDay).add(currentMonthCount, "d");
+        return dayjs(new Date(year, month, currentMonthCount));
       });
-
-    for (let n = 0; n < firstDay.day(); n++) {
-      days.unshift(null);
-    }
-
-    days = appendPokemon(days);
-    setDaysArr(days);
-  };
-
-  const filterArr = (type) => {
-    var typePokemonArr = pokemonArr.filter((poke) => {
-      let types = poke.types.map(({ type }) => type.name);
-      return ~types.indexOf(type);
     });
-    var types = typePokemonArr.map(
-      ({ sprites: { front_default: sprite }, name }) => {
-        return { sprite, name };
-      }
-    );
-    return types;
-  };
 
-  const previousMonth = () => {
-    const newMonth = date.subtract(1, "M");
-    setDate(newMonth);
-    setCurrentType(typeMap[newMonth.month()]);
+    return daysMatrix;
   };
+  const [currenMatrix, setCurrentMatrix] = useState(getMatrix());
+  const [monthIndex, setMonthIndex] = useState(0);
 
-  const nextMonth = () => {
-    const newMonth = date.add(1, "M");
-    setDate(newMonth);
-    setCurrentType(typeMap[newMonth.month()]);
-  };
+  useEffect(() => {
+    setCurrentMatrix(getMatrix(monthIndex));
+  }, [monthIndex]);
 
   return (
-    <section className={styles.calendar}>
-      <div className={styles.calendar__month}>
-        <div className={styles.circle__empty}>
-          <BsChevronLeft onClick={previousMonth} />
-        </div>
-        <p>
-          {date.format("MMMM ")} {date.format("YYYY ")}
-        </p>
-        <div className={styles.circle__empty}>
-          <BsChevronRight onClick={nextMonth} />
-        </div>
+    <div className={styles.calendar}>
+      <CalendarHeader />
+      <div>
+        <Month month={currenMatrix} />
       </div>
-      <div className={styles.calendar__week}>
-        <div>SUN</div>
-        <div>MON</div>
-        <div>TUE</div>
-        <div>WED</div>
-        <div>THU</div>
-        <div>FRI</div>
-        <div>SAT</div>
-      </div>
-      <div className={styles.calendar__days}>
-        {daysArr &&
-          daysArr.map((v, i) => {
-            return (
-              <div key={i}>
-                {v && (
-                  <>
-                    <div className={styles.date__day}>{v.sprite && v.day}</div>
-                    {v.sprite && (
-                      <img
-                        className={styles.small__img}
-                        alt="pokemon sprite"
-                        src={v.sprite}
-                      />
-                    )}
-                  </>
-                )}
-              </div>
-            );
-          })}
-      </div>
-    </section>
+    </div>
   );
 }
 
