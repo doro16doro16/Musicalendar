@@ -34,7 +34,7 @@ function Home() {
         {/* <UserInfo /> */}
         <div className={styles.index}>
           <Calendar />
-          <Diary />
+          {/* <Diary /> */}
         </div>
       </>
     </>

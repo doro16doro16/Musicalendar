@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import Month from "./Month";
 import styles from "../styles/Home.module.scss";
-import CalendarHeader from "./CalendarHeader";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 function Calendar() {
   const getMatrix = (month = dayjs().month()) => {
@@ -22,8 +22,16 @@ function Calendar() {
 
     return daysMatrix;
   };
+
   const [currenMatrix, setCurrentMatrix] = useState(getMatrix());
-  const [monthIndex, setMonthIndex] = useState(0);
+  const [monthIndex, setMonthIndex] = useState(dayjs().month());
+
+  function handlePrevMonth() {
+    setMonthIndex(monthIndex - 1);
+  }
+  function handleNextMonth() {
+    setMonthIndex(monthIndex + 1);
+  }
 
   useEffect(() => {
     setCurrentMatrix(getMatrix(monthIndex));
@@ -31,10 +39,15 @@ function Calendar() {
 
   return (
     <div className={styles.calendar}>
-      <CalendarHeader />
-      <div>
-        <Month month={currenMatrix} />
-      </div>
+      <header>
+        <button>Today</button>
+        <BsChevronLeft onClick={handlePrevMonth} />
+        <h2>
+          {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
+        </h2>
+        <BsChevronRight onClick={handleNextMonth} />
+      </header>
+      <Month month={currenMatrix} />
     </div>
   );
 }
