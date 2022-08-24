@@ -1,15 +1,45 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { playerSlice } from "../redux/slice/playerSlice";
+import { diarySlice } from "../redux/slice/diarySlice";
 import { FastAverageColor } from "fast-average-color";
+import { AiOutlineClose } from "react-icons/ai";
 import styles from "../styles/Home.module.scss";
 
 function Diary() {
   const { playingTrack, isPlaying } = useSelector((state) => state.player);
+  const { selectedDay, isShown, savedDiary } = useSelector(
+    (state) => state.diary
+  );
+  const dispatch = useDispatch();
+  const [content, setContent] = useState(null);
+  const [image, setImage] = useState(null);
   const [color, setColor] = useState("rgb(0,0,0");
   const scrollRef1 = useRef(null);
   const scrollRef2 = useRef(null);
 
+  const onClose = useCallback(() => {
+    dispatch(diarySlice.actions.setIsShown(false));
+  });
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const savedForm = {
+        id: Date.now(),
+        day: selectedDay,
+        image,
+        name: playingTrack?.name,
+        artists: playingTrack?.artists[0]?.name, // 임시
+        content,
+      };
+      dispatch(diarySlice.actions.setSavedDiary(savedForm));
+      dispatch(diarySlice.actions.setIsShown(false));
+      console.log("눌림");
+      console.log(savedForm);
+    },
+    [playingTrack, selectedDay]
+  );
   const autoScroll = (scrollRef, time) => {
     console.log("test", scrollRef?.current);
     let intervalId = setInterval(() => {
@@ -28,9 +58,14 @@ function Diary() {
       }
     }, time);
   };
+
   const diaryColor = {
     backgroundImage: `linear-gradient( ${color} 48%, rgb(240,240,240) 48% 100%)`,
   };
+
+  useEffect(() => {
+    localStorage.setItem("savedDiary", JSON.stringify(savedDiary));
+  }, [savedDiary]);
 
   useEffect(() => {
     autoScroll(scrollRef1, 50);
@@ -42,6 +77,7 @@ function Diary() {
         .then((color) => {
           console.log(color);
           setColor(color.hexa);
+          setImage(playingTrack.images[0]?.url);
         })
         .catch((e) => {
           console.error(e);
@@ -53,15 +89,23 @@ function Diary() {
         .getColorAsync(playingTrack.album.images[0]?.url)
         .then((color) => {
           setColor(color.hexa);
+          setImage(playingTrack.album.images[0]?.url);
         })
         .catch((e) => {
           console.error(e);
         });
     }
   }, [playingTrack]);
+
   return (
     <div className={styles.diary} style={diaryColor}>
-      <div>
+      <p>
+        <AiOutlineClose onClick={onClose} />
+      </p>
+      <form>
+        <div className={styles.diary__txt}>
+          <h3>{selectedDay?.split("T")[0]}</h3>
+        </div>
         <div className={styles.diary__img}>
           {/* 나중에 보호연산 뺄 것 */}
           {playingTrack?.images && (
@@ -85,13 +129,18 @@ function Diary() {
           </span>
         </div>
 
-        <textarea placeholder="내용을 입력하세요.">
-          {/* Hello there, this is some text in a text area Hello there, this is some
-        text in a text areaHello there, this is some text in a text areaHello
-        there, this is some text in a text areaHello there, this is some text in
-        a text areaHello there, this is some text in a te */}
-        </textarea>
-      </div>
+        <textarea
+          placeholder="내용을 입력하세요."
+          name="content"
+          value={content}
+          maxLength="500"
+          requiredss
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <button type="submit" onClick={onSubmit}>
+          저장
+        </button>
+      </form>
     </div>
   );
 }

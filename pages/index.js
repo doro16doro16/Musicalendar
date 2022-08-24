@@ -10,6 +10,7 @@ import Player from "../components/Player";
 import Loader from "../components/Loader";
 import Calendar from "../components/Calendar";
 import Diary from "../components/Diary";
+import { useSelector } from "react-redux";
 
 function Home() {
   const router = useRouter();
@@ -20,9 +21,11 @@ function Home() {
       router.push("/login");
     },
   });
+
   if (status === "loading") {
     return <Loader />;
   }
+  // const { isShown } = useSelector((state) => state.diary);
 
   return (
     <>
@@ -34,7 +37,8 @@ function Home() {
         {/* <UserInfo /> */}
         <div className={styles.index}>
           <Calendar />
-          {/* <Diary /> */}
+          {/* {isShown && <Diary />} */}
+          <Diary />
         </div>
       </>
     </>

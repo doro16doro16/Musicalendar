@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.scss";
 import Searchbar from "./Searchbar";
 import Card from "./Card";
 import Songs from "./Songs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Searchlist() {
   const { data: session } = useSession();

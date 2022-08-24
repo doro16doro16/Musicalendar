@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import Month from "./Month";
 import styles from "../styles/Home.module.scss";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { diarySlice } from "../redux/slice/diarySlice";
 
 function Calendar() {
   const getMatrix = (month = dayjs().month()) => {
-    month = Math.floor(month);
     const year = dayjs().year();
     // const firstDay = dayjs(dayjs()).startOf("M");
     // let currentMonthCount = 0 - firstDay.day();
@@ -25,6 +26,7 @@ function Calendar() {
 
   const [currenMatrix, setCurrentMatrix] = useState(getMatrix());
   const [monthIndex, setMonthIndex] = useState(dayjs().month());
+  const dispatch = useDispatch();
 
   function handlePrevMonth() {
     setMonthIndex(monthIndex - 1);
@@ -32,7 +34,13 @@ function Calendar() {
   function handleNextMonth() {
     setMonthIndex(monthIndex + 1);
   }
+  function handleTodayMonth() {
+    setMonthIndex(dayjs().month());
+  }
 
+  const onClickWriteBtn = useCallback(() => {
+    dispatch(diarySlice.actions.setIsShown(true));
+  });
   useEffect(() => {
     setCurrentMatrix(getMatrix(monthIndex));
   }, [monthIndex]);
@@ -40,12 +48,15 @@ function Calendar() {
   return (
     <div className={styles.calendar}>
       <header>
-        <button>Today</button>
-        <BsChevronLeft onClick={handlePrevMonth} />
-        <h2>
-          {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
-        </h2>
-        <BsChevronRight onClick={handleNextMonth} />
+        <button onClick={handleTodayMonth}>Today</button>
+        <button onClick={onClickWriteBtn}>감상 기록 +</button>
+        <div>
+          <BsChevronLeft onClick={handlePrevMonth} />
+          <h2>
+            {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
+          </h2>
+          <BsChevronRight onClick={handleNextMonth} />
+        </div>
       </header>
       <Month month={currenMatrix} />
     </div>
