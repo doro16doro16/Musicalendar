@@ -12,8 +12,7 @@ function Diary() {
     (state) => state.diary
   );
   const dispatch = useDispatch();
-  const [content, setContent] = useState(null);
-  const [image, setImage] = useState(null);
+  const textRef = useRef(null);
   const [color, setColor] = useState("rgb(0,0,0");
   const scrollRef1 = useRef(null);
   const scrollRef2 = useRef(null);
@@ -22,21 +21,27 @@ function Diary() {
     dispatch(diarySlice.actions.setIsShown(false));
   });
 
+  function getImageUrl() {
+    if (playingTrack?.images) {
+      return playingTrack.images[0]?.url;
+    }
+    if (playingTrack?.album) {
+      return playingTrack.album.images[0]?.url;
+    }
+  }
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
       const savedForm = {
         id: Date.now(),
         day: selectedDay,
-        image,
+        image: getImageUrl(),
         name: playingTrack?.name,
         artists: playingTrack?.artists[0]?.name, // 임시
-        content,
+        content: textRef.current.value,
       };
       dispatch(diarySlice.actions.setSavedDiary(savedForm));
       dispatch(diarySlice.actions.setIsShown(false));
-      console.log("눌림");
-      console.log(savedForm);
     },
     [playingTrack, selectedDay]
   );
@@ -77,7 +82,6 @@ function Diary() {
         .then((color) => {
           console.log(color);
           setColor(color.hexa);
-          setImage(playingTrack.images[0]?.url);
         })
         .catch((e) => {
           console.error(e);
@@ -89,7 +93,6 @@ function Diary() {
         .getColorAsync(playingTrack.album.images[0]?.url)
         .then((color) => {
           setColor(color.hexa);
-          setImage(playingTrack.album.images[0]?.url);
         })
         .catch((e) => {
           console.error(e);
@@ -131,11 +134,11 @@ function Diary() {
 
         <textarea
           placeholder="내용을 입력하세요."
+          ref={textRef}
+          id="content"
           name="content"
-          value={content}
           maxLength="500"
-          requiredss
-          onChange={(e) => setContent(e.target.value)}
+          required
         />
         <button type="submit" onClick={onSubmit}>
           저장

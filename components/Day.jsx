@@ -7,8 +7,8 @@ import { diarySlice } from "../redux/slice/diarySlice";
 function Day({ day, rowIdx }) {
   const { selectedDay, isShown } = useSelector((state) => state.diary);
   const dispatch = useDispatch();
-  const tmp = day.toJSON(); //RTX 직렬화 불가
-
+  const tmp = day.add(1, "day").toJSON();
+  // RTX 직렬화 불가. ISO8601 string으로 바꾸면서 시간차 발생
   const onClickDay = useCallback(() => {
     dispatch(diarySlice.actions.setSelectedDay(tmp));
     dispatch(diarySlice.actions.setIsShown(true));

@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 //   return [];
 // }
 const initialState = {
-  selectedDay: null,
+  selectedDay: dayjs().toJSON(),
   isShown: false,
   savedDiary: [],
 };
