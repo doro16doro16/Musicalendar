@@ -11,6 +11,16 @@ function Diary() {
   const { selectedDay, isShown, savedDiary } = useSelector(
     (state) => state.diary
   );
+  const dispatch = useDispatch();
+  const textRef = useRef(null);
+  const [color, setColor] = useState("rgb(0,0,0");
+  const scrollRef1 = useRef(null);
+  const scrollRef2 = useRef(null);
+
+  const onClose = useCallback(() => {
+    dispatch(diarySlice.actions.setIsShown(false));
+  });
+
   function getImageUrl() {
     if (playingTrack?.images) {
       return playingTrack.images[0]?.url;
@@ -19,24 +29,13 @@ function Diary() {
       return playingTrack.album.images[0]?.url;
     }
   }
-  const dispatch = useDispatch();
-  const textRef = useRef(null);
-  const [color, setColor] = useState("rgb(0,0,0");
-  const [image, setImage] = useState(getImageUrl()); // 먼저 초기화 후 색깔 바꾸기
-  const scrollRef1 = useRef(null);
-  const scrollRef2 = useRef(null);
-
-  const onClose = useCallback(() => {
-    dispatch(diarySlice.actions.setIsShown(false));
-  });
-
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
       const savedForm = {
         id: Date.now(),
         day: selectedDay,
-        image,
+        image: getImageUrl(),
         name: playingTrack?.name,
         artists: playingTrack?.artists[0]?.name, // 임시
         content: textRef.current.value,
@@ -75,19 +74,27 @@ function Diary() {
     console.log("달라짐 savedDiary");
   }, [savedDiary]);
 
-  useEffect(() => {
-    autoScroll(scrollRef1, 50);
-    autoScroll(scrollRef2, 35);
-
+  function getAvgColor(x) {
     const fac = new FastAverageColor();
     fac
-      .getColorAsync(image)
+      .getColorAsync(x)
       .then((color) => {
         setColor(color.hexa);
+        setImage(x);
       })
       .catch((e) => {
         console.error(e);
       });
+  }
+  useEffect(() => {
+    autoScroll(scrollRef1, 50);
+    autoScroll(scrollRef2, 35);
+    if (playingTrack?.images) {
+      getAvgColor(playingTrack.images[0]?.url);
+    }
+    if (playingTrack?.album) {
+      getAvgColor(playingTrack.album.images[0]?.url);
+    }
   }, [playingTrack]);
 
   return (
@@ -101,8 +108,12 @@ function Diary() {
         </div>
         <div className={styles.diary__img}>
           {/* 나중에 보호연산 뺄 것 */}
-
-          <img src={image} alt="" />
+          {playingTrack?.images && (
+            <img src={playingTrack?.images[0]?.url} alt="" />
+          )}
+          {playingTrack?.album && (
+            <img src={playingTrack?.album.images[0]?.url} alt="" />
+          )}
         </div>
 
         <div className={styles.diary__txt} ref={scrollRef1}>

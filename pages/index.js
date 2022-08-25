@@ -11,6 +11,7 @@ import Loader from "../components/Loader";
 import Calendar from "../components/Calendar";
 import Diary from "../components/Diary";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function Home() {
   const router = useRouter();
@@ -25,7 +26,12 @@ function Home() {
   if (status === "loading") {
     return <Loader />;
   }
-  // const { isShown } = useSelector((state) => state.diary);
+  const { isShown, savedDiary } = useSelector((state) => state.diary);
+
+  // 모달 닫기때문에 index.js에서 함
+  useEffect(() => {
+    localStorage.setItem("savedDiary", JSON.stringify(savedDiary));
+  }, [savedDiary]);
 
   return (
     <>
@@ -37,8 +43,7 @@ function Home() {
         {/* <UserInfo /> */}
         <div className={styles.index}>
           <Calendar />
-          {/* {isShown && <Diary />} */}
-          <Diary />
+          {isShown && <Diary />}
         </div>
       </>
     </>
