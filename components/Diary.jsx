@@ -51,7 +51,6 @@ function Diary() {
   const onDelete = useCallback(() => {
     dispatch(diarySlice.actions.deleteDiary(writtenDiary));
     dispatch(diarySlice.actions.setIsShown(false));
-    console.log("writtenDiary", writtenDiary);
   });
 
   const onSubmit = useCallback(

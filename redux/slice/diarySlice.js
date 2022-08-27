@@ -30,9 +30,6 @@ export const diarySlice = createSlice({
     },
     pushDiary: (state, action) => {
       state.savedDiary.push(action.payload);
-      state.writtenDiary = state.savedDiary.find(
-        (x) => x.day === state.selectedDay
-      );
     },
     updateDiary: (state, action) => {
       state.savedDiary = state.savedDiary.map((x) =>
