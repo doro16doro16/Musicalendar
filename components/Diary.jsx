@@ -121,7 +121,7 @@ function Diary() {
   }, [playingTrack]);
 
   return (
-    <div className={styles.diary__outer}>
+    <div className={styles.modal__outer}>
       <div className={styles.diary} style={diaryColor}>
         <p>
           {writtenDiary && <AiOutlineEdit onClick={onEdit} />}

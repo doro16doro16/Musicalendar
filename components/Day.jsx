@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { current } from "@reduxjs/toolkit";
-
 import styles from "../styles/Home.module.scss";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { diarySlice } from "../redux/slice/diarySlice";
 
 function Day({ day, rowIdx }) {
+  const { playingTrack } = useSelector((state) => state.player);
   const { selectedDay, isShown, savedDiary, writtenDiary } = useSelector(
     (state) => state.diary
   );

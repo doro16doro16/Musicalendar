@@ -10,6 +10,7 @@ import Player from "../components/Player";
 import Loader from "../components/Loader";
 import Calendar from "../components/Calendar";
 import Diary from "../components/Diary";
+import Alert from "../components/Alert";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -26,6 +27,7 @@ function Home() {
   if (status === "loading") {
     return <Loader />;
   }
+  const { playingTrack } = useSelector((state) => state.player);
   const { isShown, savedDiary } = useSelector((state) => state.diary);
 
   // 모달 닫기때문에 index.js에서 함
@@ -43,7 +45,7 @@ function Home() {
         {/* <UserInfo /> */}
         <div className={styles.index}>
           <Calendar />
-          {isShown && <Diary />}
+          {isShown && playingTrack ? <Diary /> : null}
         </div>
       </>
     </>
