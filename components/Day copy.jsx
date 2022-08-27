@@ -19,13 +19,6 @@ function Day({ day, rowIdx }) {
     dispatch(diarySlice.actions.setIsShown(true));
   }, [day]);
 
-  const onClickImage = useCallback(() => {
-    dispatch(
-      diarySlice.actions.setWrittenDiary(savedDiary?.find((d) => d.day === tmp))
-    );
-    console.log("이미지눌림");
-  }, [savedDiary, selectedDay]);
-
   const todayColor = {
     color: "rgb(110, 170, 248)",
   };
@@ -42,9 +35,13 @@ function Day({ day, rowIdx }) {
         <>
           <img
             src={savedDiary?.find((d) => d.day === tmp)?.image}
-            onClick={onClickImage}
-            alt=""
-            style={{ backgroundColor: "ornage" }}
+            onClick={() =>
+              dispatch(
+                diarySlice.actions.setWrittenDiary(
+                  savedDiary?.find((d) => d.day === tmp)
+                )
+              )
+            }
           />
           <p style={{ color: "white", zIndex: 1, position: "absolute" }}>
             {

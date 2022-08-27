@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { playerSlice } from "../redux/slice/playerSlice";
 import { diarySlice } from "../redux/slice/diarySlice";
 import { FastAverageColor } from "fast-average-color";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import styles from "../styles/Home.module.scss";
 
 function Diary() {
   const { playingTrack, isPlaying } = useSelector((state) => state.player);
-  const { selectedDay, isShown, savedDiary } = useSelector(
-    (state) => state.diary
-  );
+  const { selectedDay, isShown, isEditable, savedDiary, writtenDiary } =
+    useSelector((state) => state.diary);
   function getImageUrl() {
+    if (writtenDiary && !isEditable) {
+      return writtenDiary.image;
+    }
     if (playingTrack?.images) {
       return playingTrack.images[0]?.url;
     }
@@ -23,6 +25,18 @@ function Diary() {
   const textRef = useRef(null);
   const [color, setColor] = useState("rgb(0,0,0");
   const [image, setImage] = useState(getImageUrl()); // 먼저 초기화 후 색깔 바꾸기
+  const [name, setName] = useState(
+    writtenDiary && !isEditable ? writtenDiary.name : playingTrack?.name
+  );
+  const [artists, setArtists] = useState(
+    writtenDiary && !isEditable
+      ? writtenDiary.artists
+      : playingTrack?.artists?.map((artist, i) =>
+          playingTrack.artists.length === i + 1
+            ? artist.name
+            : artist.name + ",\u00A0"
+        )
+  );
   const scrollRef1 = useRef(null);
   const scrollRef2 = useRef(null);
 
@@ -30,23 +44,40 @@ function Diary() {
     dispatch(diarySlice.actions.setIsShown(false));
   });
 
+  const onEdit = useCallback(() => {
+    dispatch(diarySlice.actions.setIsEditable(true));
+  });
+
+  const onDelete = useCallback(() => {
+    dispatch(diarySlice.actions.deleteDiary(writtenDiary));
+    dispatch(diarySlice.actions.setIsShown(false));
+    console.log("writtenDiary", writtenDiary);
+  });
+
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
       const savedForm = {
-        id: Date.now(),
+        id: writtenDiary ? writtenDiary.id : Date.now(),
         day: selectedDay,
         image,
-        name: playingTrack?.name,
-        artists: playingTrack?.artists[0]?.name, // 임시
+        name,
+        artists,
         content: textRef.current.value,
       };
-      dispatch(diarySlice.actions.pushDiary(savedForm));
+      if (writtenDiary) {
+        dispatch(diarySlice.actions.updateDiary(savedForm));
+      } else {
+        dispatch(diarySlice.actions.pushDiary(savedForm));
+      }
       dispatch(diarySlice.actions.setIsShown(false));
+      dispatch(diarySlice.actions.setIsEditable(false));
+
       console.log("savedForm", savedForm);
     },
     [playingTrack, selectedDay]
   );
+
   const autoScroll = (scrollRef, time) => {
     console.log("test", scrollRef?.current);
     let intervalId = setInterval(() => {
@@ -72,13 +103,13 @@ function Diary() {
 
   useEffect(() => {
     localStorage.setItem("savedDiary", JSON.stringify(savedDiary));
-    console.log("달라짐 savedDiary");
   }, [savedDiary]);
 
   useEffect(() => {
+    textRef.current.value = writtenDiary ? writtenDiary.content : "";
+
     autoScroll(scrollRef1, 50);
     autoScroll(scrollRef2, 35);
-
     const fac = new FastAverageColor();
     fac
       .getColorAsync(image)
@@ -91,45 +122,48 @@ function Diary() {
   }, [playingTrack]);
 
   return (
-    <div className={styles.diary} style={diaryColor}>
-      <p>
-        <AiOutlineClose onClick={onClose} />
-      </p>
-      <form>
-        <div className={styles.diary__txt}>
-          <h3>{selectedDay?.split("T")[0]}</h3>
-        </div>
-        <div className={styles.diary__img}>
-          {/* 나중에 보호연산 뺄 것 */}
+    <div className={styles.diary__outer}>
+      <div className={styles.diary} style={diaryColor}>
+        <p>
+          {writtenDiary && <AiOutlineEdit onClick={onEdit} />}
+          {writtenDiary && <AiOutlineDelete onClick={onDelete} />}
+          <AiOutlineClose onClick={onClose} />
+        </p>
+        <form>
+          <div className={styles.diary__txt}>
+            <h3>{selectedDay?.split("T")[0]}</h3>
+          </div>
+          <div className={styles.diary__img}>
+            {/* 나중에 보호연산 뺄 것 */}
 
-          <img src={image} alt="" />
-        </div>
+            <img src={image} alt="" />
+          </div>
 
-        <div className={styles.diary__txt} ref={scrollRef1}>
-          <h4>{playingTrack?.name}</h4>
-        </div>
-        <div className={styles.diary__txt} ref={scrollRef2}>
-          <span>
-            {playingTrack?.artists?.map((artist, i) =>
-              playingTrack.artists.length === i + 1
-                ? artist.name
-                : artist.name + ",\u00A0"
-            )}
-          </span>
-        </div>
+          <div className={styles.diary__txt} ref={scrollRef1}>
+            <h4>{name}</h4>
+          </div>
+          <div className={styles.diary__txt} ref={scrollRef2}>
+            <span>{artists}</span>
+          </div>
 
-        <textarea
-          placeholder="내용을 입력하세요."
-          ref={textRef}
-          id="content"
-          name="content"
-          maxLength="500"
-          required
-        />
-        <button type="submit" onClick={onSubmit}>
-          저장
-        </button>
-      </form>
+          <textarea
+            placeholder="내용을 입력하세요."
+            ref={textRef}
+            id="content"
+            name="content"
+            maxLength="500"
+            required
+            {...(writtenDiary && !isEditable
+              ? { disabled: true }
+              : { disabled: false })}
+          />
+          {!writtenDiary || isEditable ? (
+            <button type="submit" onClick={onSubmit}>
+              저장
+            </button>
+          ) : null}
+        </form>
+      </div>
     </div>
   );
 }

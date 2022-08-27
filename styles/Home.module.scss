@@ -176,6 +176,14 @@
 }
 
 // 기록창
+.diary__outer {
+  // 다시 스크롤 문제 해결
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
 .diary {
   display: flex;
   flex-direction: column;
@@ -185,20 +193,23 @@
   top: 0;
   right: 0;
   bottom: 0;
-  padding: 1rem 3.5rem 3.5rem;
+  padding: 1.375rem 3.5rem 3.5rem;
   width: $px428;
   min-height: 63rem; /*임시*/
   background-color: black;
   p {
-    // 날짜
+    // 수정 삭제 닫기 아이콘
     position: absolute;
     font-size: 1.5rem;
-    top: 2%;
+    top: 1.625rem;
     right: 1rem;
     margin: 0;
+    > * {
+      margin-left: 0.625rem;
+    }
   }
   form {
-    width: 100%;
+    width: 95%;
     button {
       position: absolute;
       bottom: 20%;
@@ -251,7 +262,7 @@
   // justify-content: center;
   h3 {
     font-size: 1.375rem;
-    margin: 1.5% auto 5%;
+    margin: 1.5% auto 8%;
   }
   h4 {
     font-size: 1.75rem;

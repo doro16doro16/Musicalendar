@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
 
 function initEvent() {
@@ -10,8 +10,9 @@ function initEvent() {
 const initialState = {
   selectedDay: dayjs().toJSON(),
   isShown: false,
+  isEditable: false,
   savedDiary: initEvent(),
-  writtenDiary: null,
+  writtenDiary: {},
 };
 
 export const diarySlice = createSlice({
@@ -24,21 +25,27 @@ export const diarySlice = createSlice({
     setIsShown: (state, action) => {
       state.isShown = action.payload;
     },
+    setIsEditable: (state, action) => {
+      state.isEditable = action.payload;
+    },
     pushDiary: (state, action) => {
       state.savedDiary.push(action.payload);
+      state.writtenDiary = state.savedDiary.find(
+        (x) => x.day === state.selectedDay
+      );
     },
     updateDiary: (state, action) => {
-      state.savedDiary.map((x) =>
+      state.savedDiary = state.savedDiary.map((x) =>
         x.id === action.payload.id ? action.payload : x
       );
     },
     deleteDiary: (state, action) => {
-      state.savedDiary.filter((x) => x.id !== action.payload.id);
+      state.savedDiary = state.savedDiary.filter(
+        (x) => x.id !== action.payload.id
+      );
     },
     setWrittenDiary: (state, action) => {
-      state.writtenDiary = state.savedDiary.find(
-        (x) => x.day === action.payload
-      );
+      state.writtenDiary = action.payload;
     },
   },
 });
