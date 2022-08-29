@@ -28,25 +28,37 @@ function Day({ day, rowIdx }) {
 
   return (
     <div className={styles.day} onClick={onClickDay}>
-      {rowIdx === 0 && <h5>{day.format("ddd").toUpperCase()}</h5>}
-      {day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
-        <p style={todayColor}>{day.format("DD")}</p>
-      ) : (
-        <p>{day.format("DD")}</p>
-      )}
-      {savedDiary?.find((d) => d.day === tmp) ? (
-        <>
-          <img src={savedDiary?.find((d) => d.day === tmp)?.image} alt="" />
-          <p style={{ color: "white", zIndex: 1, position: "absolute" }}>
-            {
-              savedDiary
-                ?.find((d) => d.day === tmp)
-                ?.day.split("T")[0]
-                .split("-")[2]
-            }
-          </p>
-        </>
-      ) : null}
+      <div>
+        {rowIdx === 0 && <h5>{day.format("ddd").toUpperCase()}</h5>}
+        {day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
+          <p style={todayColor}>{day.format("DD")}</p>
+        ) : (
+          <p>{day.format("DD")}</p>
+        )}
+
+        {savedDiary?.find((d) => d.day === tmp) ? (
+          <>
+            <img src={savedDiary?.find((d) => d.day === tmp)?.image} alt="" />
+            <p
+              style={{
+                color: "white",
+                zIndex: 0,
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              {
+                savedDiary
+                  ?.find((d) => d.day === tmp)
+                  ?.day.split("T")[0]
+                  .split("-")[2]
+              }
+            </p>
+          </>
+        ) : null}
+      </div>
     </div>
   );
 }
