@@ -10,36 +10,35 @@ function Song({ track, order }) {
   const dispatch = useDispatch();
 
   const clickPlay = () => {
-    dispatch(playerSlice.actions.setPlayingTrack(track.track));
-    if (track.track.uri === playingTrack.uri) {
+    dispatch(playerSlice.actions.setPlayingTrack(track));
+    if (track.uri === playingTrack.uri) {
       dispatch(playerSlice.actions.setIsPlaying(!isPlaying));
     }
   };
   const [hasLiked, setHasLiked] = useState(false);
 
   return (
-    <div className={styles.song} onClick={clickPlay}>
-      <div className={styles.song__left}>
+    <div className={styles.song}>
+      <div className={styles.song__left} onClick={clickPlay}>
         <p>{order + 1}</p>
-        <img src={track.track.album.images[0].url} alt="" />
+        <img src={track.album.images[0].url} alt="" />
         <div>
-          <span className={styles.song__name}>{track.track.name}</span>
-          {/* <p className={styles.song__artists}>{track.track.artists[0].name}</p> */}
+          <span className={styles.song__name}>{track.name}</span>
           <span className={styles.song__artists}>
-            {track.track.artists.map((artist, index) => (
+            {track.artists.map((artist, index) => (
               <span key={artist.id}>
                 {" "}
                 {artist.name}
-                {track.track.artists.length == index + 1 ? "" : ","}
+                {track.artists.length == index + 1 ? "" : ","}
               </span>
             ))}
           </span>
         </div>
       </div>
       <div className={styles.song__right}>
-        <p>{track.track.album.name}</p>
+        <p onClick={clickPlay}>{track.album.name}</p>
         <div className={styles.flex}>
-          <p>{millisToMinutesAndSeconds(track.track.duration_ms)}</p>
+          <p>{millisToMinutesAndSeconds(track.duration_ms)}</p>
           {hasLiked ? (
             <AiFillHeart
               className={styles.fillheart}

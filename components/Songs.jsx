@@ -9,7 +9,7 @@ function Songs() {
   return (
     <div className={styles.songs}>
       {playlist?.tracks.items.map((track, i) => (
-        <Song key={track.track.id} track={track} order={i} />
+        <Song key={track.track.id} track={track.track} order={i} />
       ))}
     </div>
   );
