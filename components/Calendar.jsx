@@ -51,11 +51,15 @@ function Calendar() {
         <button onClick={handleTodayMonth}>Today</button>
         <button onClick={onClickWriteBtn}>감상 기록 +</button>
         <div>
-          <BsChevronLeft onClick={handlePrevMonth} />
+          <button>
+            <BsChevronLeft onClick={handlePrevMonth} />
+          </button>
           <h2>
             {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
           </h2>
-          <BsChevronRight onClick={handleNextMonth} />
+          <button>
+            <BsChevronRight onClick={handleNextMonth} />
+          </button>
         </div>
       </header>
       <Month month={currenMatrix} />

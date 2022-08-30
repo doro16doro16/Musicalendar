@@ -99,6 +99,9 @@ function Diary() {
   const diaryColor = {
     backgroundImage: `linear-gradient( ${color} 48%, rgb(240,240,240) 48% 100%)`,
   };
+  const buttonColor = {
+    backgroundColor: color,
+  };
 
   useEffect(() => {
     localStorage.setItem("savedDiary", JSON.stringify(savedDiary));
@@ -133,8 +136,6 @@ function Diary() {
             <h3>{selectedDay?.split("T")[0]}</h3>
           </div>
           <div className={styles.diary__img}>
-            {/* 나중에 보호연산 뺄 것 */}
-
             <img src={image} alt="" />
           </div>
 
@@ -157,7 +158,7 @@ function Diary() {
               : { disabled: false })}
           />
           {!writtenDiary || isEditable ? (
-            <button type="submit" onClick={onSubmit}>
+            <button type="submit" onClick={onSubmit} style={buttonColor}>
               저장
             </button>
           ) : null}

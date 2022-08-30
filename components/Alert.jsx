@@ -8,13 +8,12 @@ function Alert({ onToggle }) {
     <div className={styles.modal__outer}>
       <div className={styles.alert}>
         <div>
-          {/* <Image src={logo_odd} alt="" className={styles.logo_left} /> */}
           <img src="logo_odd.png" className={styles.logo_left} alt="" />
           <img src="logo_odd.png" className={styles.logo_right} alt="" />
         </div>
         <div>
-          <p>노래를 먼저 선택해주세요.</p>
-          <button onClick={onToggle}>Close</button>
+          <p>기록할 노래를 먼저 선택해주세요.</p>
+          <button onClick={onToggle}>확인</button>
         </div>
       </div>
     </div>
