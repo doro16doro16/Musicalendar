@@ -18,11 +18,15 @@ function login({ providers }) {
 
   return (
     <div className={styles.login}>
-      <img src="Spotify_logo.png" alt="Spotify_logo" />
+      <div className={styles.logo}>
+        <img src="logo_odd.png" className={styles.logo_left} alt="" />
+        <img src="logo_odd.png" className={styles.logo_right} alt="" />
+      </div>
+      <h1>Musicalendar</h1>
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
           <button onClick={() => signIn(provider.id)}>
-            Login with {provider.name}
+            {provider.name} 로 시작하기
           </button>
         </div>
       ))}
