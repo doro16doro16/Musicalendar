@@ -15,18 +15,19 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function Home() {
-  const router = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      router.push("/login");
-    },
-  });
+  // 임시 제거
+  // const router = useRouter();
+  // const { data: session, status } = useSession({
+  //   required: true,
+  //   onUnauthenticated() {
+  //     // The user is not authenticated, handle it here.
+  //     router.push("/login");
+  //   },
+  // });
 
-  if (status === "loading") {
-    return <Loader />;
-  }
+  // if (status === "loading") {
+  //   return <Loader />;
+  // }
   const { playingTrack } = useSelector((state) => state.player);
   const { isShown, savedDiary } = useSelector((state) => state.diary);
 

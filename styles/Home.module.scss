@@ -433,6 +433,7 @@
   justify-content: space-between;
   p {
     font-size: 0.875rem;
+    line-height: 1.375rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -442,15 +443,13 @@
 }
 
 // 아이콘
-.emptyheart {
+.emptyheart,
+.fillheart {
   width: 1.25rem /* 20px */;
   height: 1.25rem /* 20px */;
   margin: 0.875rem 0 0.875rem 1.25rem;
 }
 .fillheart {
-  width: 1.25rem /* 20px */;
-  height: 1.25rem /* 20px */;
-  margin: 0.875rem 0 0.875rem 1.25rem;
   color: $blue;
 }
 .circle__white {
@@ -508,6 +507,7 @@
   border-radius: 200px;
   border: 0.125rem solid #333;
   padding: 0.25rem 1.25rem;
+  margin-right: 16rem;
   input {
     background-color: #1a1a1a;
     padding: 0.5rem;
@@ -539,16 +539,12 @@
 
 .searchlist__cards {
   display: grid;
+  grid-template-columns: repeat(4, minmax(8rem, 16rem));
   // grid-template-columns: repeat(4, 1fr);
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   // grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); // 정방형 좋은 크기
-  row-gap: 10rem; // 정방형 원한다면 gap 통일
+  row-gap: 5rem; // 정방형 원한다면 gap 통일
   column-gap: 1.5rem;
-  // width: 100%;
-  padding: 1rem 1rem 8rem;
-  // @media screen and (max-width: 718px) {
-  //   gap: 3px;
-  // }
+  padding: 1rem 1rem 7rem;
 }
 
 .card {
@@ -556,7 +552,7 @@
   width: 100%;
   height: 138%; // 정방형 원하면 삭제
   position: relative;
-  border-radius: 50px;
+  border-radius: 25px;
   overflow: hidden;
   color: rgb(255 255 255 / 0.8);
   cursor: pointer;
@@ -575,7 +571,7 @@
     height: 100%;
     position: absolute;
     object-fit: cover;
-    border-radius: 50px;
+    border-radius: 25px;
     opacity: 0.8;
     &:hover {
       opacity: 1;
@@ -647,7 +643,7 @@
 // userInfo
 .userInfo {
   position: absolute;
-  top: 1.25rem /* 20px */;
+  top: 1.5rem;
   right: 2rem /* 32px */;
   > div {
     display: flex;
@@ -674,11 +670,24 @@
       margin-bottom: 0;
     }
   }
+  @media (max-width: $px768) {
+    > div {
+      > * {
+        margin-right: 0;
+      }
+    }
+    p {
+      display: none;
+    }
+    .icon {
+      display: none;
+    }
+  }
 }
 
 .alert {
   position: absolute;
-  top: 30%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -718,8 +727,23 @@
   }
 }
 
+// labtop (Large)
+@media (max-width: $px1024) {
+  .searchlist__cards {
+    column-gap: 1rem;
+    padding: 1rem 1rem 4rem;
+  }
+}
 // tablet (Medium)
 @media (max-width: $px768) {
+  .searchlist {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .searchlist__cards {
+    grid-template-columns: repeat(2, minmax(8rem, 12rem));
+    // padding: 1rem 1rem 6rem;
+  }
   .calendar {
     width: 20rem;
     margin-right: auto;
@@ -736,12 +760,25 @@
       font-size: 0.75rem;
     }
   }
+  .searchbar {
+    margin-left: 0.5rem;
+    margin-right: 6rem;
+  }
+  .song {
+    grid-template-columns: 10fr 1fr;
+  }
+  .song__right {
+    p {
+      display: none;
+    }
+  }
 }
 // mobile
 @media (max-width: $px500) {
   .calendar {
   }
-  .alert {
+  .searchlist {
+    left: 0;
   }
   .diary {
     position: relative;
@@ -784,19 +821,6 @@
 
   .player {
     bottom: 6rem;
-  }
-  .userInfo {
-    > div {
-      > * {
-        margin-right: 0;
-      }
-    }
-    p {
-      display: none;
-    }
-    .icon {
-      display: none;
-    }
   }
 }
 
