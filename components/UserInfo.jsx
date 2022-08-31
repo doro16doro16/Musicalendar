@@ -10,7 +10,9 @@ function UserInfo() {
   return (
     <header className={styles.userInfo}>
       <div
-        onClick={() => signOut({ callbackUrl: "http://localhost:3000/login" })}
+        onClick={() =>
+          signOut({ callbackUrl: "https://musicalendar.vercel.app/login" })
+        }
       >
         <img src={session?.user.image} alt="" />
         <p>{session?.user.name}</p>
