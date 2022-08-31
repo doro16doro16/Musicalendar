@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  playlistId: "37i9dQZEVXbNxXF4SkHj9F",
+  playlistId: null,
   playlist: null,
+  library: null,
 };
 
 export const playlistSlice = createSlice({
@@ -14,6 +15,9 @@ export const playlistSlice = createSlice({
     },
     setPlaylist: (state, action) => {
       state.playlist = action.payload;
+    },
+    setLibrary: (state, action) => {
+      state.library = action.payload;
     },
   },
 });

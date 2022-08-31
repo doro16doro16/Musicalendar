@@ -13,7 +13,7 @@ import Player from "./Player";
 function Sidebar() {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
-  const [playlists, setPlaylists] = useState([]);
+  const { library } = useSelector((state) => state.playlist);
   // const [isHide, setIsHide] = useState(false);
 
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function Sidebar() {
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       spotifyApi.getUserPlaylists().then((data) => {
-        setPlaylists(data.body.items);
+        dispatch(playlistSlice.actions.setLibrary(data.body.items));
         // setIsHide(true);
       });
     }
@@ -42,7 +42,7 @@ function Sidebar() {
             <p>검색하기</p>
           </button>
         </Link>
-        <Link href="/library">
+        <Link href="/mylibrary">
           <button>
             <BiLibrary className={styles.icon} />
             <p>내 라이브러리</p>
@@ -51,8 +51,8 @@ function Sidebar() {
         <hr />
 
         {/* Playlists... */}
-        {playlists.map((playlist) => (
-          <Link href="/library">
+        {library?.map((playlist) => (
+          <Link href="/playlists">
             <p
               key={playlist.id}
               className={styles.sidebar__playlist}

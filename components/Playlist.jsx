@@ -13,13 +13,6 @@ function Playlist() {
   const [color, setColor] = useState(null);
   const dispatch = useDispatch();
   const spotifyApi = useSpotify();
-  // const accessToken = spotifyApi.getAccessToken();
-
-  // 추가
-  // useEffect(() => {
-  //   if (!accessToken) return;
-  //   spotifyApi.setAccessToken(accessToken);
-  // }, [accessToken]);
 
   useEffect(() => {
     spotifyApi
@@ -39,7 +32,6 @@ function Playlist() {
       .catch((err) => console.log("getPlaylist API error"));
   }, [dispatch, spotifyApi, playlistId]);
 
-  console.log("playlist", playlist);
   return (
     <>
       <div className={styles.playlist}>

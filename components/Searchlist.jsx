@@ -18,16 +18,9 @@ function Searchlist() {
   const [newReleases, setNewReleases] = useState([]);
   const dispatch = useDispatch();
 
-  // 추가
-  useEffect(() => {
-    if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
-  }, [accessToken]);
-
   // Search
   useEffect(() => {
     if (!search) return setSearchResults([]);
-
     spotifyApi.searchTracks(search).then((res) => {
       setSearchResults(res.body.tracks.items);
     });

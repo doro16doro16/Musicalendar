@@ -1,20 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import Head from "next/head";
 import UserInfo from "../components/UserInfo";
-import Playlist from "../components/Playlist";
 import styles from "../styles/Home.module.scss";
+import Library from "../components/Library";
 
-function Library() {
+function MyLibrary() {
   return (
     <>
       <Head>
         <title>Musicalendar - Library</title>
-        <meta name="description" content="Musicalendar - Home" />
+        <meta name="description" content="Musicalendar - MyLibrary" />
       </Head>
 
       <main className={styles.flex}>
         <UserInfo />
-        <Playlist />
+        <Library />
       </main>
     </>
   );
@@ -29,4 +29,4 @@ function Library() {
 //     props: { session },
 //   };
 // };
-export default Library;
+export default MyLibrary;
