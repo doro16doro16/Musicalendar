@@ -5,24 +5,9 @@ import Day from "./Day";
 import styles from "../styles/Home.module.scss";
 
 function Month({ month }) {
-  const { playingTrack } = useSelector((state) => state.player);
-  const [alert, setAlert] = useState(false);
-
-  const onClickMonth = useCallback(() => {
-    if (playingTrack) {
-      setAlert(false);
-    } else {
-      setAlert(true);
-    }
-  }, [playingTrack]);
-
-  const onToggle = useCallback(() => {
-    setAlert((prev) => !prev);
-  }, []);
-
   return (
     <>
-      <div className={styles.month} onClick={onClickMonth}>
+      <div className={styles.month}>
         {month.map((row, i) => (
           <React.Fragment key={i}>
             {row.map((day, idx) => (
@@ -31,7 +16,6 @@ function Month({ month }) {
           </React.Fragment>
         ))}
       </div>
-      {alert && <Alert onToggle={onToggle} />}
     </>
   );
 }

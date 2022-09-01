@@ -12,24 +12,43 @@ import Calendar from "../components/Calendar";
 import Diary from "../components/Diary";
 import Alert from "../components/Alert";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Home() {
   // 임시 제거
-  // const router = useRouter();
-  // const { data: session, status } = useSession({
-  //   required: true,
-  //   onUnauthenticated() {
-  //     // The user is not authenticated, handle it here.
-  //     router.push("/login");
-  //   },
-  // });
+  const router = useRouter();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, handle it here.
+      router.push("/login");
+    },
+  });
 
-  // if (status === "loading") {
-  //   return <Loader />;
-  // }
+  if (status === "loading") {
+    return <Loader />;
+  }
   const { playingTrack } = useSelector((state) => state.player);
   const { isShown, savedDiary } = useSelector((state) => state.diary);
+  const [is500px, setIs500px] = useState(false);
+
+  const resizingHandler = () => {
+    if (window.innerWidth <= 500) {
+      setIs500px(true);
+    } else {
+      setIs500px(false);
+    }
+  };
+
+  useEffect(() => {
+    if (window.innerWidth <= 500) {
+      setIs500px(true);
+    }
+    window.addEventListener("resize", resizingHandler);
+    return () => {
+      window.removeEventListener("resize", resizingHandler);
+    };
+  }, []);
 
   // 모달 닫기때문에 index.js에서 함
   useEffect(() => {
@@ -43,11 +62,16 @@ function Home() {
         <meta name="description" content="Musicalendar - Home" />
       </Head>
       <>
-        {/* <UserInfo /> */}
         <div className={styles.index}>
-          <Calendar />
+          {!is500px || (is500px && !isShown) ? (
+            <>
+              <Calendar /> <UserInfo />
+            </>
+          ) : null}
+
           {isShown && playingTrack ? <Diary /> : null}
         </div>
+        <Sidebar />
       </>
     </>
   );

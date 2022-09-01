@@ -3,6 +3,7 @@ import Head from "next/head";
 import UserInfo from "../components/UserInfo";
 import styles from "../styles/Home.module.scss";
 import Playlist from "../components/Playlist";
+import Sidebar from "../components/Sidebar";
 
 function Playlists() {
   return (
@@ -16,6 +17,7 @@ function Playlists() {
         <Playlist />
         {/* <UserInfo /> */}
       </main>
+      <Sidebar />
     </>
   );
 }

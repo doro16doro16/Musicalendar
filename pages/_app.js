@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
       <SessionProvider session={pageProps.session}>
         <ReduxProvider store={store}>
           <Component {...pageProps} />
-          <Sidebar />
           <Player />
         </ReduxProvider>
       </SessionProvider>

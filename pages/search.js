@@ -7,6 +7,7 @@ import Playlist from "../components/Playlist";
 import Songs from "../components/Songs";
 import Player from "../components/Player";
 import playerSlice from "../redux/slice/playerSlice";
+import Sidebar from "../components/Sidebar";
 
 function Search() {
   return (
@@ -15,10 +16,12 @@ function Search() {
         <title>Musicalendar - Search</title>
         <meta name="description" content="Musicalendar - Home" />
       </Head>
+
       <main className={styles.flex}>
         <UserInfo />
         <Searchlist />
       </main>
+      <Sidebar />
     </>
   );
 }

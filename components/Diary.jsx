@@ -42,6 +42,7 @@ function Diary() {
 
   const onClose = useCallback(() => {
     dispatch(diarySlice.actions.setIsShown(false));
+    dispatch(diarySlice.actions.setIsEditable(false));
   });
 
   const onEdit = useCallback(() => {
@@ -97,7 +98,7 @@ function Diary() {
   };
 
   const diaryColor = {
-    backgroundImage: `linear-gradient( ${color} 48%, rgb(240,240,240) 48% 100%)`,
+    backgroundImage: `linear-gradient( ${color} 50%, rgb(240,240,240) 50% 100%)`,
   };
   const buttonColor = {
     backgroundColor: color,
@@ -124,7 +125,7 @@ function Diary() {
   }, [playingTrack]);
 
   return (
-    <div className={styles.modal__outer}>
+    <div>
       <div className={styles.diary} style={diaryColor}>
         <p>
           {writtenDiary && <AiOutlineEdit onClick={onEdit} />}

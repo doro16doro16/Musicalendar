@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Alert({ onToggle }) {
   return (
-    <div className={styles.modal__outer}>
+    <div className={styles.alert__outer}>
       <div className={styles.alert}>
         <div>
           <img src="logo_odd.png" className={styles.logo_left} alt="" />

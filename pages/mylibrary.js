@@ -3,6 +3,7 @@ import Head from "next/head";
 import UserInfo from "../components/UserInfo";
 import styles from "../styles/Home.module.scss";
 import Library from "../components/Library";
+import Sidebar from "../components/Sidebar";
 
 function MyLibrary() {
   return (
@@ -16,6 +17,7 @@ function MyLibrary() {
         <UserInfo />
         <Library />
       </main>
+      <Sidebar />
     </>
   );
 }

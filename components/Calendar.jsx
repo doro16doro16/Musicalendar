@@ -37,28 +37,29 @@ function Calendar() {
   function handleTodayMonth() {
     setMonthIndex(dayjs().month());
   }
-
-  const onClickWriteBtn = useCallback(() => {
-    dispatch(diarySlice.actions.setIsShown(true));
-  });
+  // 감상기록
+  // const onClickWriteBtn = useCallback(() => {
+  //   dispatch(diarySlice.actions.setSelectedDay(dayjs().toJSON()));
+  // });
   useEffect(() => {
     setCurrentMatrix(getMatrix(monthIndex));
   }, [monthIndex]);
 
   return (
     <div className={styles.calendar}>
+      <h1>Musicalendar</h1>
       <header>
         <button onClick={handleTodayMonth}>Today</button>
-        <button onClick={onClickWriteBtn}>감상 기록 +</button>
+        {/* <button onClick={onClickWriteBtn}>감상 기록 +</button> */}
         <div>
-          <button>
-            <BsChevronLeft onClick={handlePrevMonth} />
+          <button onClick={handlePrevMonth}>
+            <BsChevronLeft />
           </button>
           <h2>
             {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
           </h2>
-          <button>
-            <BsChevronRight onClick={handleNextMonth} />
+          <button onClick={handleNextMonth}>
+            <BsChevronRight />
           </button>
         </div>
       </header>
