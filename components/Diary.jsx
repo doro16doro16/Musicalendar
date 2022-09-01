@@ -98,7 +98,7 @@ function Diary() {
   };
 
   const diaryColor = {
-    backgroundImage: `linear-gradient( ${color} 50%, rgb(240,240,240) 50% 100%)`,
+    backgroundImage: `linear-gradient( ${color} 53%, rgb(240,240,240) 53% 100%)`,
   };
   const buttonColor = {
     backgroundColor: color,
@@ -125,7 +125,7 @@ function Diary() {
   }, [playingTrack]);
 
   return (
-    <div>
+    <div className={styles.alert__outer}>
       <div className={styles.diary} style={diaryColor}>
         <p>
           {writtenDiary && <AiOutlineEdit onClick={onEdit} />}

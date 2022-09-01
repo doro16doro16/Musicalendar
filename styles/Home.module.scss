@@ -15,8 +15,9 @@
   left: 0;
   background-color: black;
   min-width: 15rem /* 240px */;
+  height: 100vh;
   overflow-y: scroll;
-  height: 100%;
+
   padding: 1.25rem /* 20px */;
   font-size: $font-sm /* 14px */;
   line-height: $font-sm-lineheight;
@@ -52,12 +53,6 @@
   &:hover {
     color: white;
   }
-}
-
-.fake {
-  min-width: $sidebar-width /* 240px */;
-  height: 100vh;
-  // padding: 1.25rem /* 20px */;
 }
 
 // 홈
@@ -185,7 +180,6 @@
 }
 
 // 일기폼
-
 .diary {
   display: flex;
   flex-direction: column;
@@ -197,8 +191,8 @@
   bottom: 0;
   padding: 1.375rem 3.5rem 3.5rem;
   width: $px428;
-  // min-height: 60rem; /*임시*/
-  height: 110vh; /*임시*/
+  height: 100%;
+  // overflow-y: scroll;
   background-color: black;
   p {
     // 수정 삭제 닫기 아이콘
@@ -212,13 +206,13 @@
     }
   }
   form {
-    width: 95%;
+    width: 90%;
     button {
       position: absolute;
       left: 3.5rem; /* diary padding */
       width: calc(100% - 7rem);
       height: 2.75rem;
-      bottom: 21%;
+      bottom: 16%;
       border-radius: 0.375rem /* 6px */;
       box-shadow: $shadow;
       &:hover {
@@ -229,9 +223,9 @@
       color: $gray-900;
       position: absolute;
       left: 3.5rem; /* diary padding */
-      top: 52%;
+      bottom: 24%;
       background-color: transparent;
-      padding: 0.75rem;
+      padding: 0.25rem;
       border-radius: 0.625rem; /* 10px */
       border: 2px solid transparent;
       outline: none;
@@ -291,10 +285,6 @@
   left: $sidebar-width;
   right: 0; // 또는 width: 100%
   margin: 1.75rem;
-  // width: 100%;
-  // height: 100vh;
-  // overflow-y: scroll;
-  // 다시 스크롤바 예쁘게 바꾸기
 }
 
 .playlist__cover {
@@ -587,6 +577,7 @@
 }
 
 .userInfo {
+  z-index: 1;
   position: absolute;
   top: 1.75rem;
   right: 2rem /* 32px */;
@@ -630,13 +621,11 @@
   }
 }
 .alert__outer {
-  // 다시 스크롤 문제 해결
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
-  // background-color: orange;
   z-index: 1;
 }
 .alert {
@@ -822,7 +811,6 @@
   .diary {
     position: relative;
     width: 100vw;
-    // height: 100vh;
   }
 
   .sidebar {
@@ -865,13 +853,15 @@
 
 // 로그인 & 로더
 .login {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100vw;
-  margin-top: 25%;
+  width: 100%;
   h1 {
     margin: 3rem auto;
     font-size: 2.75rem;
