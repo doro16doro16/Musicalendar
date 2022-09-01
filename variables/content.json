@@ -2,6 +2,6 @@
   "title": "Musicalendar",
   "description": "음악, 일상의 기록",
   "imageAlt": "Musicalendar logo",
-  "domain": "https://musicalendar-pg4xyp1e5-doro16doro16-gmailcom.vercel.app",
-  "imageUrl": "https://musicalendar.vercel.app/logo.png"
+  "domain": "https://musicalendar.vercel.app",
+  "imageUrl": "https://musicalendar.vercel.app/thumbnail.png"
 }
