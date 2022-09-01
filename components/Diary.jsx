@@ -98,7 +98,7 @@ function Diary() {
   };
 
   const diaryColor = {
-    backgroundImage: `linear-gradient( ${color} 53%, rgb(240,240,240) 53% 100%)`,
+    backgroundImage: `linear-gradient( ${color} 50%, rgb(240,240,240) 50% 100%)`,
   };
   const buttonColor = {
     backgroundColor: color,
@@ -125,46 +125,44 @@ function Diary() {
   }, [playingTrack]);
 
   return (
-    <div className={styles.alert__outer}>
-      <div className={styles.diary} style={diaryColor}>
-        <p>
-          {writtenDiary && <AiOutlineEdit onClick={onEdit} />}
-          {writtenDiary && <AiOutlineDelete onClick={onDelete} />}
-          <AiOutlineClose onClick={onClose} />
-        </p>
-        <form>
-          <div className={styles.diary__txt}>
-            <h3>{selectedDay?.split("T")[0]}</h3>
-          </div>
-          <div className={styles.diary__img}>
-            <img src={image} alt="" />
-          </div>
+    <div className={styles.diary} style={diaryColor}>
+      <p>
+        {writtenDiary && <AiOutlineEdit onClick={onEdit} />}
+        {writtenDiary && <AiOutlineDelete onClick={onDelete} />}
+        <AiOutlineClose onClick={onClose} />
+      </p>
+      <form>
+        <div className={styles.diary__txt}>
+          <h3>{selectedDay?.split("T")[0]}</h3>
+        </div>
+        <div className={styles.diary__img}>
+          <img src={image} alt="" />
+        </div>
 
-          <div className={styles.diary__txt} ref={scrollRef1}>
-            <h4>{name}</h4>
-          </div>
-          <div className={styles.diary__txt} ref={scrollRef2}>
-            <span>{artists}</span>
-          </div>
+        <div className={styles.diary__txt} ref={scrollRef1}>
+          <h4>{name}</h4>
+        </div>
+        <div className={styles.diary__txt} ref={scrollRef2}>
+          <span>{artists}</span>
+        </div>
 
-          <textarea
-            placeholder="내용을 입력하세요."
-            ref={textRef}
-            id="content"
-            name="content"
-            maxLength="500"
-            required
-            {...(writtenDiary && !isEditable
-              ? { disabled: true }
-              : { disabled: false })}
-          />
-          {!writtenDiary || isEditable ? (
-            <button type="submit" onClick={onSubmit} style={buttonColor}>
-              저장
-            </button>
-          ) : null}
-        </form>
-      </div>
+        <textarea
+          placeholder="내용을 입력하세요."
+          ref={textRef}
+          id="content"
+          name="content"
+          maxLength="500"
+          required
+          {...(writtenDiary && !isEditable
+            ? { disabled: true }
+            : { disabled: false })}
+        />
+        {!writtenDiary || isEditable ? (
+          <button type="submit" onClick={onSubmit} style={buttonColor}>
+            저장
+          </button>
+        ) : null}
+      </form>
     </div>
   );
 }

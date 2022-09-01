@@ -69,7 +69,15 @@ function Home() {
             </>
           ) : null}
 
-          {isShown && playingTrack ? <Diary /> : null}
+          {!is500px && isShown && playingTrack ? (
+            <>
+              {" "}
+              <div className={styles.alert__outer}>
+                <Diary />{" "}
+              </div>
+            </>
+          ) : null}
+          {is500px && isShown && playingTrack ? <Diary /> : null}
         </div>
         <Sidebar />
       </>
