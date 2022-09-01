@@ -1,6 +1,10 @@
 import "../styles/globals.scss";
+import React, { useEffect, useState } from "react";
+
 import { SessionProvider } from "next-auth/react";
 import { Provider as ReduxProvider } from "react-redux";
+import { signOut, useSession } from "next-auth/react";
+
 import Head from "next/head";
 import { store } from "../redux/store";
 import Player from "../components/Player";
@@ -8,11 +12,11 @@ import MetaDecorator from "../components/Util/MetaDecorator";
 const content = require("../variables/content.json");
 
 function MyApp({ Component, pageProps }) {
-  // // 추가
-  // useEffect(() => {
-  //   if (!accessToken) return;
-  //   spotifyApi.setAccessToken(accessToken);
-  // }, [accessToken]);
+  useEffect(() => {
+    return () => {
+      signOut({ callbackUrl: "https://musicalendar.vercel.app/login" });
+    };
+  }, []);
 
   return (
     <>

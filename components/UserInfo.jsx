@@ -7,6 +7,7 @@ import { BsChevronDown } from "react-icons/bs";
 function UserInfo() {
   const { data: session } = useSession();
   const spotifyApi = useSpotify();
+
   return (
     <header className={styles.userInfo}>
       <div
