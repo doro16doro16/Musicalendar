@@ -1,10 +1,9 @@
+import "../styles/globals.scss";
 import { SessionProvider } from "next-auth/react";
 import { Provider as ReduxProvider } from "react-redux";
 import Head from "next/head";
 import { store } from "../redux/store";
-import Sidebar from "../components/Sidebar";
 import Player from "../components/Player";
-import useSpotify from "../hooks/useSpotify";
 import MetaDecorator from "../components/Util/MetaDecorator";
 const content = require("../variables/content.json");
 
