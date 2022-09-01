@@ -98,7 +98,7 @@ function Diary() {
   };
 
   const diaryColor = {
-    backgroundImage: `linear-gradient( ${color} 47%, rgb(240,240,240) 47% 100%)`,
+    backgroundImage: `linear-gradient( ${color} 50%, rgb(240,240,240) 50% 100%)`,
   };
   const buttonColor = {
     backgroundColor: color,
